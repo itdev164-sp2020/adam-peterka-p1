@@ -11,7 +11,8 @@ module.exports = {
         spaceId: `wkstnc50lzn8`,
         accessToken: `9QxqEu-M6oz0xw8-oMfHVU1Rpd2A7nn5qbRnkz79rpA`,
       },
-    }`gatsby-plugin-react-helmet`,
+    },
+    `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
