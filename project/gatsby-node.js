@@ -1,9 +1,10 @@
 const path = require(`path`)
+const slash = require(`slash`)
 
 exports.createPages = ({ graphql, actions }) => {
   const { createPage } = actions
-  return new Promise((resolve, reject) => {
-    graphql(`
+  return graphql(
+    `
       {
         allContentfulProduct {
           edges {
@@ -14,20 +15,27 @@ exports.createPages = ({ graphql, actions }) => {
           }
         }
       }
-    `).then(result => {
+    `
+  )
+    .then(result => {
       if (result.errors) {
-        reject(result.errors)
+        console.log("error retrieving contentful data", result.errors)
       }
+
+      const productTemplate = path.resolve("./src/templates/product.js")
+
       result.data.allContentfulProduct.edges.forEach(edge => {
         createPage({
-          path: edge.node.slug,
-          component: path.resolve(`./src/templates/product.js`),
+          path: `/${edge.node.slug}/`,
+          component: slash(productTemplate),
           context: {
-            slug: edge.node.slu,
+            slug: edge.node.slug,
+            id: edge.node.id,
           },
         })
       })
-      resolve()
     })
-  })
+    .catch(error => {
+      console.log("Error retrieving contentful data", error)
+    })
 }

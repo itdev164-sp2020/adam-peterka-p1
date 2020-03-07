@@ -3,9 +3,10 @@ import { graphql } from "gatsby"
 import Layout from "../components/layout"
 
 const Product = ({ data }) => {
+  const { title } = data.contentfulProduct
   return (
     <Layout>
-      <h1>A</h1>
+      <h1>{title}</h1>
     </Layout>
   )
 }
