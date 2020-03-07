@@ -13,6 +13,10 @@ const IndexPage = ({ data }) => (
           <Link to={edge.node.slug} key={edge.node.id}>
             {edge.node.title}
           </Link>
+          <div>
+            <img src={edge.node.image.fluid.src} alt="product" />
+          </div>
+          {/* <div>${edge.node.price}</div> */}
         </li>
       ))}
     </ul>
@@ -22,13 +26,22 @@ const IndexPage = ({ data }) => (
 export default IndexPage
 
 export const query = graphql`
-  {
+  query MyQuery {
     allContentfulProduct {
       edges {
         node {
           id
           title
           slug
+          image {
+            fluid(maxWidth: 70, maxHeight: 100) {
+              src
+            }
+          }
+          price
+          description {
+            description
+          }
         }
       }
     }

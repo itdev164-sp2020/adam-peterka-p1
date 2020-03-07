@@ -1,6 +1,10 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
-    title: `Project 1`,
+    title: `Tanner's Tannings`,
     description: `A basic website for Project 1`,
     author: `Adam Peterka`,
   },
@@ -8,10 +12,11 @@ module.exports = {
     {
       resolve: `gatsby-source-contentful`,
       options: {
-        spaceId: `wkstnc50lzn8`,
-        accessToken: `9QxqEu-M6oz0xw8-oMfHVU1Rpd2A7nn5qbRnkz79rpA`,
+        spaceId: `${process.env.SPACE_ID}`,
+        accessToken: `${process.env.ACCESS_TOKEN}`,
       },
     },
+    `gatsby-transformer-remark`,
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
