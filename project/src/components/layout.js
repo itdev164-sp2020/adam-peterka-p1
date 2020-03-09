@@ -8,10 +8,10 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-import styled from "styled-components"
-
+import styled, { ThemeProvider } from "styled-components"
+import { Tan } from "../themes/Tan"
 import Header from "./header"
-import "./layout.css"
+import GlobalStyle from "./GlobalStyle"
 
 const Content = styled.div`
   margin: 0 auto;
@@ -32,7 +32,8 @@ const Layout = ({ children }) => {
   `)
 
   return (
-    <>
+    <ThemeProvider theme={Tan}>
+      <GlobalStyle />
       <Header siteTitle={data.site.siteMetadata.title} />
       <Content>
         <main>{children}</main>
@@ -42,7 +43,7 @@ const Layout = ({ children }) => {
           <a href="https://www.gatsbyjs.org">Gatsby</a>
         </footer>
       </Content>
-    </>
+    </ThemeProvider>
   )
 }
 
