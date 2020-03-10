@@ -14,10 +14,11 @@ const StyledLink = styled(Link)`
 const LinkBox = styled.div`
   margin: 0;
   padding: 0;
-  width: 150px;
+  max-width: 150px;
   text-align: center;
   display: flex;
   flex-wrap: wrap;
+  min-width: 150px;
 `
 
 const ProductBox = styled.div`
@@ -30,8 +31,13 @@ const ProductBox = styled.div`
 const IndexPage = ({ data }) => (
   <Layout>
     <SEO title="Home" />
+    <div
+      dangerouslySetInnerHTML={{
+        __html: data.pageLoad.text.childMarkdownRemark.html,
+      }}
+    ></div>
     <ProductBox>
-      {data.allContentfulProduct.edges.map(edge => (
+      {data.productLoad.edges.map(edge => (
         <LinkBox>
           <StyledLink to={edge.node.slug} key={edge.node.id}>
             {edge.node.title}
@@ -47,7 +53,15 @@ export default IndexPage
 
 export const query = graphql`
   query MyQuery {
-    allContentfulProduct {
+    pageLoad: contentfulPage(name: { eq: "Index" }) {
+      text {
+        childMarkdownRemark {
+          html
+        }
+      }
+    }
+
+    productLoad: allContentfulProduct {
       edges {
         node {
           id
